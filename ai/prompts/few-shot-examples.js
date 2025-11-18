@@ -1,12 +1,18 @@
 /**
  * Few-shot学習のための成功例
  * 
- * AIに具体的な返信パターンを学習させる6つの例
+ * AIに具体的な返信パターンを学習させる12つの例
+ * 4つのパターンタイプ（相槌系/選択肢系/確認要求系/グループ系）をカバー
  * 返信精度15-20%向上に貢献
  */
 
 export const FEW_SHOT_EXAMPLES = [
+  // ========================================
+  // 相槌系（Tone-based）: 3例
+  // 同じ意味を異なるトーンで表現
+  // ========================================
   {
+    type: "tone_based",
     scenario: "ビジネス承認",
     input: "明日の会議、14時からでお願いします",
     output: {
@@ -19,30 +25,7 @@ export const FEW_SHOT_EXAMPLES = [
     }
   },
   {
-    scenario: "日常の共感",
-    input: "カフェでコーヒー頼んだの忘れた笑",
-    output: {
-      short_polite: "それは大変でしたね",
-      short_casual: "あるある笑",
-      short_friendly: "わかる〜笑",
-      long_polite: "そのようなことは誰にでもございますね。",
-      long_casual: "そういうことあるよね。気にしない気にしない。",
-      long_friendly: "めっちゃわかる！私もよくやっちゃう笑"
-    }
-  },
-  {
-    scenario: "感謝への返信",
-    input: "昨日は本当にありがとうございました！",
-    output: {
-      short_polite: "どういたしまして",
-      short_casual: "気にしないで",
-      short_friendly: "全然！",
-      long_polite: "こちらこそありがとうございました。またお願いいたします。",
-      long_casual: "いえいえ、こちらこそ。また機会があればよろしく。",
-      long_friendly: "こちらこそありがとう！また誘ってね〜😊"
-    }
-  },
-  {
+    type: "tone_based",
     scenario: "ビジネス報告",
     input: "稟議が承認されましたので、ご報告いたします",
     output: {
@@ -55,27 +38,154 @@ export const FEW_SHOT_EXAMPLES = [
     }
   },
   {
-    scenario: "体調気遣い（第三者）",
-    input: "田中さん、体調崩して休むみたい",
+    type: "tone_based",
+    scenario: "感謝への返信",
+    input: "昨日は本当にありがとうございました！",
     output: {
-      short_polite: "それは心配ですね",
-      short_casual: "そうなんだ",
-      short_friendly: "大丈夫かな",
-      long_polite: "それは心配ですね。早く回復されるといいですね。",
-      long_casual: "そうなんだ。早く良くなるといいね。",
-      long_friendly: "えー！大丈夫かな。お大事にって伝えて。"
+      short_polite: "どういたしまして",
+      short_casual: "気にしないで",
+      short_friendly: "全然！",
+      long_polite: "こちらこそありがとうございました。またお願いいたします。",
+      long_casual: "いえいえ、こちらこそ。また機会があればよろしく。",
+      long_friendly: "こちらこそありがとう！また誘ってね〜😊"
+    }
+  },
+
+  // ========================================
+  // 選択肢系（Content-based）: 3例
+  // 意味的に異なる返答を提示
+  // ========================================
+  {
+    type: "content_based",
+    scenario: "体調の質問",
+    input: "最近、体調はどうですか？",
+    output: {
+      option1: "おかげさまで元気です",
+      option2: "ちょっと疲れ気味です",
+      option3: "まあまあですね",
+      option4: "忙しいですが元気です",
+      option5: "そちらこそ元気ですか？",
+      option6: "心配してくれてありがとう"
     }
   },
   {
-    scenario: "提案への質問",
+    type: "content_based",
+    scenario: "予定の質問",
+    input: "明日、時間ありますか？",
+    output: {
+      option1: "はい、大丈夫です",
+      option2: "すみません、予定があります",
+      option3: "午後なら空いています",
+      option4: "何時頃ですか？",
+      option5: "明後日はどうですか？",
+      option6: "場所次第ですが"
+    }
+  },
+  {
+    type: "content_based",
+    scenario: "提案への反応",
     input: "この案件、予算的に厳しいかも",
     output: {
-      short_polite: "どのくらいでしょうか",
-      short_casual: "どれくらい？",
-      short_friendly: "いくらくらい？",
-      long_polite: "差し支えなければ、おおよその金額をお聞かせいただけますか。",
-      long_casual: "具体的にどれくらいの予算感なのか教えてもらえる？",
-      long_friendly: "どれくらいの予算があればできそう？"
+      option1: "どのくらいでしょうか",
+      option2: "確かに厳しいですね",
+      option3: "削れる部分はありますか",
+      option4: "別の方法を考えましょう",
+      option5: "何とかなるかもしれません",
+      option6: "上司に相談してみます"
+    }
+  },
+
+  // ========================================
+  // 確認要求系（Confirmation）: 3例
+  // 相手が確認を求めている場合の返信
+  // ========================================
+  {
+    type: "confirmation",
+    scenario: "資料の受信確認",
+    context: "前のメッセージ: 資料を送りました",
+    input: "届いてますか？",
+    output: {
+      option1: "はい、確認できました",
+      option2: "まだ届いていません",
+      option3: "今確認します",
+      option4: "少々お待ちください",
+      option5: "どの資料でしょうか？",
+      option6: "申し訳ございません、見落としていました"
+    }
+  },
+  {
+    type: "confirmation",
+    scenario: "日程の確認",
+    context: "前のメッセージ: 明日の会議、14時からでお願いします",
+    input: "確認できましたか？",
+    output: {
+      option1: "はい、14時で大丈夫です",
+      option2: "すみません、その時間は厳しいです",
+      option3: "カレンダーを確認します",
+      option4: "15時からは可能でしょうか",
+      option5: "場所はどこでしょうか",
+      option6: "返信が遅れて申し訳ございません"
+    }
+  },
+  {
+    type: "confirmation",
+    scenario: "タスクの進捗確認",
+    context: "前のメッセージ: 企画書の作成をお願いします",
+    input: "進捗はどうですか？",
+    output: {
+      option1: "完了しました",
+      option2: "現在作業中です",
+      option3: "もうすぐ完了します",
+      option4: "少し遅れています",
+      option5: "相談したいことがあります",
+      option6: "明日中には完了予定です"
+    }
+  },
+
+  // ========================================
+  // グループチャット系（Group）: 3例
+  // 複数人が参加するグループでの返信
+  // ========================================
+  {
+    type: "group_chat",
+    scenario: "会議の参加確認",
+    group_size: 5,
+    input: "明日の会議、参加できる人いますか？",
+    output: {
+      option1: "参加します",
+      option2: "不参加です",
+      option3: "何時からですか？",
+      option4: "@田中さん どうですか？",
+      option5: "@山田さん 議題を共有してください",
+      option6: "午後なら参加できます"
+    }
+  },
+  {
+    type: "group_chat",
+    scenario: "イベントの案内",
+    group_size: 10,
+    input: "来週の懇親会、参加希望者は返信お願いします",
+    output: {
+      option1: "参加します！",
+      option2: "今回は欠席します",
+      option3: "場所はどこですか？",
+      option4: "会費はいくらですか？",
+      option5: "@佐藤さん 一緒に行きませんか？",
+      option6: "仮参加で"
+    }
+  },
+  {
+    type: "group_chat",
+    scenario: "情報共有",
+    group_size: 8,
+    input: "プロジェクトの進捗報告です。Phase 1が完了しました。",
+    output: {
+      option1: "了解しました",
+      option2: "お疲れ様です！",
+      option3: "Phase 2のスケジュールは？",
+      option4: "どんな成果でしたか？",
+      option5: "@鈴木さん ありがとうございます",
+      option6: "私も協力します"
     }
   }
 ];
