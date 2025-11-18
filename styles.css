@@ -1,0 +1,424 @@
+/* 君斗りんく AI返信アシスタント - スタイル */
+/* dns-osint-pro-ver2.0のデザインベース */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 420px !important;
+  max-height: 650px !important;
+  min-height: 400px !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  background: #ffffff;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden !important;
+}
+
+/* ヘッダー */
+header {
+  padding: 12px 15px;
+  background: #5b3a8f;
+  color: white;
+  flex-shrink: 0;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.header-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.header-text {
+  flex: 1;
+}
+
+h1 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.header-subtitle {
+  margin: 5px 0 0 0;
+  font-size: 0.75em;
+  color: #fff;
+  font-weight: normal;
+  opacity: 0.9;
+}
+
+/* メインコンテナ */
+main {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #f5f5f5;
+  padding: 15px;
+}
+
+/* フォームセクション */
+.form-section {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.form-row {
+  margin-bottom: 12px;
+}
+
+.form-row:last-child {
+  margin-bottom: 0;
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #5b3a8f;
+  margin-bottom: 8px;
+}
+
+textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  resize: vertical;
+  transition: border-color 0.2s;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #5b3a8f;
+  box-shadow: 0 0 0 3px rgba(91, 58, 143, 0.1);
+}
+
+textarea.context {
+  min-height: 120px;
+}
+
+textarea.notes {
+  min-height: 80px;
+}
+
+select {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+select:focus {
+  outline: none;
+  border-color: #5b3a8f;
+  box-shadow: 0 0 0 3px rgba(91, 58, 143, 0.1);
+}
+
+/* ボタン */
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  flex: 1;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+button.primary {
+  background: #5b3a8f;
+  color: white;
+}
+
+button.primary:hover {
+  background: #7a4fa7;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(91, 58, 143, 0.3);
+}
+
+button.primary:active {
+  background: #693e96;
+  transform: translateY(0);
+}
+
+button.secondary {
+  background: #8b5fb8;
+  color: white;
+}
+
+button.secondary:hover {
+  background: #7a4fa7;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(139, 95, 184, 0.3);
+}
+
+button.tertiary {
+  background: #e0e0e0;
+  color: #666;
+}
+
+button.tertiary:hover {
+  background: #d0d0d0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* 出力エリア */
+.output-section {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.output-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.output-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #5b3a8f;
+}
+
+.output-content {
+  background: #f7f7f7;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 15px;
+  min-height: 120px;
+  white-space: pre-wrap;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+}
+
+.output-content.empty {
+  color: #999;
+  font-style: italic;
+}
+
+/* ステータス */
+.status-bar {
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-bar.info {
+  background: #e3f2fd;
+  color: #1565c0;
+  border-left: 4px solid #1976d2;
+}
+
+.status-bar.success {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border-left: 4px solid #4caf50;
+}
+
+.status-bar.error {
+  background: #ffebee;
+  color: #c62828;
+  border-left: 4px solid #f44336;
+}
+
+.status-bar.loading {
+  background: #fff3e0;
+  color: #e65100;
+  border-left: 4px solid #ff9800;
+}
+
+/* スクロールバー */
+main::-webkit-scrollbar {
+  width: 8px;
+}
+
+main::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+
+main::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+main::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+/* Hover効果用クラス (CSP対応) */
+.hover-scale {
+  transition: all 0.3s;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.hover-scale-border {
+  transition: all 0.3s;
+}
+
+.hover-scale-border:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3) !important;
+  border-color: #4caf50 !important;
+}
+
+/* 2列レイアウト */
+.two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+@media (max-width: 700px) {
+  .two-column {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =================================== */
+/* LINE風返信候補UI */
+/* =================================== */
+#suggestionArea {
+  background: white;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.suggestion-section-header {
+  font-size: 12px;
+  font-weight: bold;
+  color: #666;
+  margin: 12px 0 6px 0;
+  padding: 6px 10px;
+  background: #f5f5f5;
+  border-radius: 6px;
+  border-left: 3px solid #7B68EE;
+}
+
+.suggestion-header {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.suggestion-item {
+  padding: 10px 12px;
+  margin: 6px 0;
+  background: #f7f7f7;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+}
+
+.suggestion-item:hover {
+  background: #e8f5e9;
+  border-color: #06c755;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(6, 199, 85, 0.2);
+}
+
+.suggestion-item:active {
+  transform: scale(0.98);
+}
+
+.suggestion-label {
+  display: inline-block;
+  font-size: 10px;
+  color: #06c755;
+  font-weight: bold;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.suggestion-text {
+  margin: 4px 0 0 0;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.4;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  max-height: none;
+  overflow: visible;
+}
+
+/* フェードインアニメーション */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Claudeスタイルのフィードバックボタン */
+#feedbackBar button {
+  transition: all 0.2s ease;
+}
+
+#feedbackBar button:hover {
+  background: #f3f4f6 !important;
+  border-color: #9ca3af !important;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#feedbackBar button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}

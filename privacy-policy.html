@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プライバシーポリシー - 君斗りんくのAI返信サジェスト[定型文・履歴機能付き]</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.8; max-width: 800px; margin: 40px auto; padding: 20px; color: #333; }
+        h1 { color: #06C755; border-bottom: 3px solid #06C755; padding-bottom: 10px; }
+        h2 { color: #444; margin-top: 30px; border-left: 4px solid #06C755; padding-left: 12px; }
+        .update-date { color: #666; font-size: 14px; margin-bottom: 30px; }
+        .contact { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-top: 40px; }
+    </style>
+</head>
+<body>
+    <h1>プライバシーポリシー</h1>
+    <p class="update-date">最終更新日：2025年10月30日（v6.4.0）</p>
+
+    <h2>1. 基本方針</h2>
+    <p>「君斗りんくのAI返信サジェスト[定型文・履歴機能付き]」（以下「本拡張機能」）は、ユーザーのプライバシーを最大限尊重し、個人情報の保護に努めます。</p>
+
+    <h2>2. 収集する情報</h2>
+    <h3>2.1 自動収集される情報</h3>
+    <ul>
+        <li><strong>メッセージテキスト</strong>：AI返信生成時のみ、OpenRouter APIに送信されます。</li>
+        <li><strong>定型文データ</strong>：ユーザーが登録した定型文（ブラウザ内のみ保存）。</li>
+        <li><strong>クリップボード履歴</strong>：最大30件、24時間保存（ブラウザ内のみ）。</li>
+        <li><strong>成功例データ</strong>：ユーザーが高評価した返信（最大10件、ブラウザ内のみ）。</li>
+    </ul>
+
+    <h3>2.2 収集しない情報</h3>
+    <ul>
+        <li>氏名、住所、電話番号などの個人識別情報</li>
+        <li>クレジットカード情報</li>
+        <li>閲覧履歴（AI返信生成対象外のページ）</li>
+    </ul>
+
+    <h2>3. 情報の利用目的</h2>
+    <ul>
+        <li><strong>AI返信生成</strong>：OpenRouter APIを使用して返信候補を生成</li>
+        <li><strong>定型文管理</strong>：ユーザーの作業効率化、ドラッグ&ドロップでの並び替え</li>
+        <li><strong>クリップボード履歴</strong>：過去にコピーしたテキストの再利用、履歴から定型文への変換</li>
+        <li><strong>継続学習</strong>：ユーザーが高評価した返信の学習</li>
+        <li><strong>会議リンク管理</strong>：定型文で{{zoom}}、{{meet}}、{{teams}}を使用した自動置換</li>
+        <li><strong>バックアップ・復元</strong>：データのエクスポートとインポート</li>
+        <li><strong>日程調整</strong>：会議日程の提案文生成</li>
+    </ul>
+
+    <h2>4. AIモデルとコスト</h2>
+    <h3>4.1 デフォルト設定（無料）</h3>
+    <ul>
+        <li><strong>AIモデル</strong>：Google Gemma 2 9B（無料版）がデフォルトで設定されています。</li>
+        <li><strong>コスト</strong>：<strong>完全無料</strong>です。各ユーザーが自分のOpenRouter APIキーを用意することで、無料で使用できます。</li>
+        <li><strong>開発者のコスト負担</strong>：ありません。各ユーザーが自分のAPIキーを使用するため、開発者にコストは発生しません。</li>
+    </ul>
+
+    <h3>4.2 精度を上げたい場合（有料モデル）</h3>
+    <p>より安定したAI返信生成を希望する場合、ユーザーは以下の方法で<strong>有料モデル</strong>に切り替えることができます：</p>
+    <ul>
+        <li><strong>方法1：設定画面で切り替え</strong>：オプションページの「AIモデル」ドロップダウンで「💵 有料モデル」（GPT-4o miniなど）を選択</li>
+        <li><strong>方法2：コードで切り替え</strong>：<code>ai/core/ai-service.js</code>の11行目で<code>:free</code>を削除（<code>const DEFAULT_MODEL = 'google/gemma-2-9b-it';</code>）</li>
+    </ul>
+    <ul>
+        <li><strong>コスト</strong>：月約30円（100回使用/月の場合）。各ユーザーが自分のOpenRouterアカウントにクレジットを追加する必要があります。</li>
+        <li><strong>メリット</strong>：空の応答エラーが減少、複雑なプロンプトに対応、レート制限が緩い。</li>
+        <li><strong>開発者のコスト負担</strong>：ありません。各ユーザーが自分のAPIキーを使用するため、開発者にコストは発生しません。</li>
+    </ul>
+
+    <h2>5. 情報の保存と共有</h2>
+    <h3>5.1 データ保存場所</h3>
+    <ul>
+        <li><strong>chrome.storage.sync</strong>：すべてのデータはブラウザ内に保存され、外部サーバーには保存されません。</li>
+        <li><strong>パスワード検出</strong>：クリップボード履歴にパスワードと思われるテキストは自動で識別されます。</li>
+    </ul>
+
+    <h3>5.2 第三者への提供</h3>
+    <ul>
+        <li><strong>OpenRouter API</strong>：AI返信生成時のみメッセージテキストを送信します。</li>
+        <li><strong>その他の第三者</strong>：ユーザーデータを販売、共有、レンタルすることは一切ありません。</li>
+    </ul>
+
+    <h2>6. 使用する権限</h2>
+    <table border="1" cellpadding="10" cellspacing="0" style="width:100%; border-collapse: collapse;">
+        <tr style="background:#f0f0f0;">
+            <th>権限</th>
+            <th>使用目的</th>
+        </tr>
+        <tr>
+            <td><code>storage</code></td>
+            <td>定型文、クリップボード履歴、成功例をブラウザ内に保存</td>
+        </tr>
+        <tr>
+            <td><code>activeTab</code></td>
+            <td>現在開いているタブのメッセージを取得</td>
+        </tr>
+        <tr>
+            <td><code>scripting</code></td>
+            <td>Chatwork、ココナラ、ランサーズのページにスクリプトを挿入</td>
+        </tr>
+        <tr>
+            <td><code>clipboardWrite</code></td>
+            <td>返信候補や定型文をクリップボードにコピー</td>
+        </tr>
+        <tr>
+            <td><code>clipboardRead</code></td>
+            <td>クリップボード履歴機能の実現</td>
+        </tr>
+        <tr>
+            <td><code>&lt;all_urls&gt;</code></td>
+            <td>定型文・履歴機能をすべてのWEBサイトで使用可能にする</td>
+        </tr>
+    </table>
+
+    <h2>7. データの削除</h2>
+    <p>ユーザーは以下の方法でデータを削除できます：</p>
+    <ul>
+        <li><strong>定型文</strong>：各定型文の「×」ボタンをクリック</li>
+        <li><strong>クリップボード履歴</strong>：各履歴の「×」ボタンをクリック、または「🗑️ 全削除」ボタン</li>
+        <li><strong>成功例</strong>：オプションページから削除</li>
+        <li><strong>すべてのデータ</strong>：拡張機能をアンインストール</li>
+    </ul>
+
+    <h2>8. セキュリティ</h2>
+    <ul>
+        <li>すべてのデータはブラウザ内（chrome.storage.sync）に保存され、暗号化されています。</li>
+        <li>パスワードと思われるテキストは自動検出され、クリップボード履歴に表示時に「●●●●●●」でマスクされます。</li>
+        <li>OpenRouter APIとの通信はHTTPS暗号化通信で行われます。</li>
+    </ul>
+
+    <h2>9. 子供のプライバシー</h2>
+    <p>本拡張機能は13歳未満の子供を対象としていません。13歳未満の子供の個人情報を意図的に収集することはありません。</p>
+
+    <h2>10. プライバシーポリシーの変更</h2>
+    <p>本プライバシーポリシーは予告なく変更される場合があります。変更後のポリシーは、本ページに掲載された時点で効力を生じます。</p>
+
+    <h2>11. お問い合わせ</h2>
+    <div class="contact">
+        <p><strong>開発者</strong>：君斗りんく</p>
+        <p><strong>メールアドレス</strong>：<a href="mailto:info@reverse-re-birth-hack.com">info@reverse-re-birth-hack.com</a></p>
+        <p><strong>公式サイト</strong>：<a href="https://reverse-rebirth-hack.com" target="_blank">https://reverse-rebirth-hack.com</a></p>
+        <p><strong>LINE相談</strong>：</p>
+        <ul>
+            <li>風評対策：<a href="https://lin.ee/X2aWSFO" target="_blank">https://lin.ee/X2aWSFO</a></li>
+            <li>ITインフラ：<a href="https://lin.ee/lrjVHvH" target="_blank">https://lin.ee/lrjVHvH</a></li>
+        </ul>
+    </div>
+</body>
+</html>

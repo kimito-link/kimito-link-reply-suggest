@@ -1,0 +1,30 @@
+﻿# 君斗りんくのAI返信サジェスト[定型文・履歴機能付き]
+#
+# 【編集方法】
+# 1. Excelで開く → 文字化けする場合は「データ」→「テキストファイル」→「UTF-8」を選択
+# 2. 定型文を追加：種別に「定型文」、タイトルと内容を入力、画像URLは任意
+# 3. 保存：CSV形式で保存（UTF-8）
+#
+# 【SNSリンク】
+# X
+# - 君斗りんく＠クリエイター応援: https://x.com/streamerfunch
+# - 君斗りんく＠アイドル応援: https://x.com/idolfunch
+# - リバースハック｜ITインフラサポート公式: https://x.com/coconalaweb
+# YouTube
+# - 君斗りんくのアイドル応援ちゃんねる: https://www.youtube.com/@idolfunch
+# - 君斗りんくの配信者応援ちゃんねる: https://www.youtube.com/@streamerfunch
+# - リバースハックちゃんねる-reverse-Re-rebirth: https://www.youtube.com/@reverseseotop
+# TikTok
+# - 君斗りんく＠アイドル応援: https://www.tiktok.com/@idolfunch
+# - 君斗りんく＠クリエイター応援: https://www.tiktok.com/@stremerfunch
+# - リバースハック-逆seo +サジェスト汚染対策のプロ: https://www.tiktok.com/@revercetop
+# Instagram
+# - 君斗りんく＠クリエイター応援: https://www.instagram.com/streamerfunch/
+# - 君斗りんく＠アイドル応援: https://www.instagram.com/idolfunch/
+# - リバースハック-逆seo +サジェスト汚染対策のプロ: https://www.instagram.com/revercetop/
+#
+"種別","タイトル","内容","日時","画像URL"
+"定型文","WIXサポートでは　なんらか情報おもちではございませんでした","WIXサポートでは　なんらか情報おもちではございませんでしたか？","",""
+"定型文","アクセスログに","アクセスログに","",""
+"履歴","","アクセスログに","2025/10/30 6:38:55",""
+"履歴","","WIXサポートでは　なんらか情報おもちではございませんでしたか？","2025/10/30 6:38:44",""

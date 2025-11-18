@@ -1,0 +1,35 @@
+# 環境変数・機密情報
+.env
+.env.local
+*.key
+*.pem
+
+# APIキーを含むファイル（念のため）
+config.local.js
+
+# ビルド生成物
+dist/
+build/
+
+# ログファイル
+*.log
+npm-debug.log*
+
+# エディタ設定
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS生成ファイル
+.DS_Store
+Thumbs.db
+
+# テスト関連
+coverage/
+.nyc_output/
+
+# 一時ファイル
+*.tmp
+temp/

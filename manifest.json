@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "君斗りんくのAI返信サジェスト[定型文・履歴機能付き]",
+  "version": "6.5.0",
+  "description": "Chatwork/ココナラ/ランサーズ対応。定型文・履歴機能はどのWEBサイトでも使えます。",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "clipboardWrite",
+    "clipboardRead"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "AI返信コパイロット v2",
+    "default_icon": {
+      "16": "images/favi-link-chat.png",
+      "32": "images/favi-link-chat.png",
+      "128": "images/favi-link-chat.png"
+    }
+  },
+  "icons": {
+    "16": "images/favi-link-chat.png",
+    "48": "images/favi-link-chat.png",
+    "128": "images/favi-link-chat.png"
+  },
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ]
+}

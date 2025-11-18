@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>君斗りんくのAI返信サジェスト[定型文・履歴機能付き]</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <img src="images/link.png" alt="logo" class="header-logo">
+         <div class="header-text">
+        <h1 style="font-size:16px; margin:0 0 4px 0">💬 君斗りんくのAI返信サジェスト</h1>
+        <p class="header-subtitle" style="margin:0 0 3px 0; font-size:11px">Chatwork・ココナラ・ランサーズ対応 🔥 他も対応予定</p>
+                <p style="font-size:9px; color:#fff; margin:0; opacity:0.9">定型文・履歴機能は、どのWEBサイトでも使えます</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ⚠️ 重要な警告バナー -->
+    <div id="backupWarning" style="display:none; margin-bottom:15px; padding:12px; background:#fef3c7; border:2px solid #f59e0b; border-radius:8px; position:relative">
+      <!-- ×閉じるボタン -->
+      <button id="closeWarning" style="position:absolute; top:8px; right:8px; background:none; border:none; font-size:18px; cursor:pointer; color:#92400e; padding:0; width:24px; height:24px; display:flex; align-items:center; justify-content:center; border-radius:4px; transition:background 0.2s" title="閉じる">
+        ×
+      </button>
+      
+      <div style="display:flex; align-items:center; margin-bottom:8px">
+        <span style="font-size:20px; margin-right:8px">⚠️</span>
+        <strong style="font-size:14px; color:#92400e">重要：データが消える前にバックアップを！</strong>
+      </div>
+      <p style="font-size:11px; color:#78350f; margin:0 0 8px 0">
+        拡張機能を削除すると、すべての定型文と履歴が<strong>完全に削除</strong>されます。
+      </p>
+      <p style="font-size:11px; color:#78350f; margin:0 0 10px 0">
+        最終バックアップ: <strong id="lastBackupDate">未実施</strong>
+      </p>
+      <button id="quickBackup" style="width:100%; padding:8px; background:#f59e0b; color:#fff; border:none; border-radius:4px; font-weight:bold; cursor:pointer; font-size:12px; margin-bottom:10px">
+        💾 今すぐバックアップ（1クリック）
+      </button>
+      
+      <!-- 今後表示しないチェックボックス -->
+      <label style="display:flex; align-items:center; font-size:11px; color:#78350f; cursor:pointer; user-select:none">
+        <input type="checkbox" id="dontShowWarning" style="margin-right:6px; cursor:pointer">
+        今後この警告を表示しない
+      </label>
+    </div>
+
+    <!-- 生成ボタン -->
+    <button id="runAndInsert" class="primary" style="width:100%; margin-bottom:15px; padding:14px; font-size:16px; background:#8b5cf6">
+      ⚡ AI返信を生成して挿入
+    </button>
+    
+    <div id="statusBar" style="display:none"></div>
+    
+    <!-- 返信候補エリア（statusBarの直下） -->
+    <div id="suggestionArea" style="display:none; margin-top:12px; margin-bottom:15px">
+      <h3 style="font-size:14px; margin-bottom:10px">✨ 返信候補</h3>
+      
+      <!-- 短い返信 3つ -->
+      <div id="suggestion1" class="suggestion-box" style="display:none; padding:12px; margin-bottom:8px; border:1px solid #ddd; border-radius:6px; background:#fff; cursor:pointer">
+        <div class="suggestion-text"></div>
+      </div>
+      <div id="suggestion2" class="suggestion-box" style="display:none; padding:12px; margin-bottom:8px; border:1px solid #ddd; border-radius:6px; background:#fff; cursor:pointer">
+        <div class="suggestion-text"></div>
+      </div>
+      <div id="suggestion3" class="suggestion-box" style="display:none; padding:12px; margin-bottom:8px; border:1px solid #ddd; border-radius:6px; background:#fff; cursor:pointer">
+        <div class="suggestion-text"></div>
+      </div>
+      
+      <!-- 長い返信 3つ -->
+      <div id="suggestion4" class="suggestion-box" style="display:none; padding:12px; margin-bottom:8px; border:1px solid #ddd; border-radius:6px; background:#fff; cursor:pointer">
+        <div class="suggestion-text"></div>
+      </div>
+      <div id="suggestion5" class="suggestion-box" style="display:none; padding:12px; margin-bottom:8px; border:1px solid #ddd; border-radius:6px; background:#fff; cursor:pointer">
+        <div class="suggestion-text"></div>
+      </div>
+      <div id="suggestion6" class="suggestion-box" style="display:none; padding:12px; margin-bottom:8px; border:1px solid #ddd; border-radius:6px; background:#fff; cursor:pointer">
+        <div class="suggestion-text"></div>
+      </div>
+      
+      <!-- Claudeスタイルのフィードバックボタンバー -->
+      <div id="feedbackBar" style="display:flex; justify-content:center; gap:8px; margin-top:12px; padding-top:12px; border-top:1px solid #e5e7eb">
+        <button id="copyAllBtn" title="すべての返信候補をコピー" style="padding:8px 12px; background:#fff; border:1px solid #d1d5db; border-radius:6px; cursor:pointer; font-size:12px; color:#374151; display:flex; align-items:center; gap:4px; transition:all 0.2s">
+          📋 <span style="font-size:11px">コピー</span>
+        </button>
+        <button id="feedbackGoodBtn" title="この返信スタイルは良い（学習）" style="padding:8px 12px; background:#fff; border:1px solid #d1d5db; border-radius:6px; cursor:pointer; font-size:12px; color:#374151; display:flex; align-items:center; gap:4px; transition:all 0.2s">
+          👍 <span style="font-size:11px">良い返信</span>
+        </button>
+        <button id="feedbackBadBtn" title="この返信スタイルは悪い" style="padding:8px 12px; background:#fff; border:1px solid #d1d5db; border-radius:6px; cursor:pointer; font-size:12px; color:#374151; display:flex; align-items:center; gap:4px; transition:all 0.2s">
+          👎 <span style="font-size:11px">悪い返信</span>
+        </button>
+        <button id="retryBtn" title="もう一度AI返信を生成" style="padding:8px 12px; background:#fff; border:1px solid #d1d5db; border-radius:6px; cursor:pointer; font-size:12px; color:#374151; display:flex; align-items:center; gap:4px; transition:all 0.2s">
+          🔄 <span style="font-size:11px">再試行</span>
+        </button>
+      </div>
+    </div>
+    
+    <!-- 📊 使用回数表示エリア -->
+    <div id="usageInfo" style="padding:10px; margin-bottom:20px; background:#f0f9ff; border:2px solid #bfdbfe; border-radius:6px">
+      <div id="usageText" style="font-size:13px; color:#000; font-weight:bold">読み込み中...</div>
+    </div>
+    
+    <!-- 🧪 テストモード情報 -->
+    <div id="testModeInfo" style="display:none; padding:8px 8px 25px 8px; background:#fef3c7; border:1px solid #fbbf24; border-radius:4px; font-size:12px">
+      ⚠️ テストモード有効（制限なし）
+    </div>
+    
+        <!-- 📅 日程調整セクション -->
+    <div style="margin-bottom:15px">
+      <!-- 折りたたみボタン -->
+      <button id="toggleSchedule" style="width:100%; padding:10px; background:#10b981; color:#fff; border:none; border-radius:6px; cursor:pointer; font-weight:bold; font-size:13px; display:flex; align-items:center; justify-content:center; gap:6px">
+        📹 日程調整
+      </button>
+      
+      <!-- 折りたたみコンテンツ（初期状態：非表示） -->
+      <div id="scheduleContent" style="display:none; padding:10px; background:#f0fdf4; border:1px solid #86efac; border-radius:6px; margin-top:8px">
+        <p style="font-size:11px; color:#166534; margin:0 0 10px 0">
+          📌 3つの候補日時を選んで、Zoom/Meetリンク付きの提案文を生成できます。
+        </p>
+        
+        <!-- 候補1 -->
+        <div style="margin-bottom:8px">
+          <label style="font-size:11px; font-weight:bold; color:#166534; display:block; margin-bottom:3px">① 候補1</label>
+          <div style="display:flex; gap:6px">
+            <input type="date" id="scheduleDate1" style="flex:1; padding:6px; font-size:11px; border:1px solid #86efac; border-radius:4px">
+            <input type="time" id="scheduleTime1" value="14:00" style="padding:6px; font-size:11px; border:1px solid #86efac; border-radius:4px">
+          </div>
+        </div>
+        
+        <!-- 候補2 -->
+        <div style="margin-bottom:8px">
+          <label style="font-size:11px; font-weight:bold; color:#166534; display:block; margin-bottom:3px">② 候補2</label>
+          <div style="display:flex; gap:6px">
+            <input type="date" id="scheduleDate2" style="flex:1; padding:6px; font-size:11px; border:1px solid #86efac; border-radius:4px">
+            <input type="time" id="scheduleTime2" value="15:00" style="padding:6px; font-size:11px; border:1px solid #86efac; border-radius:4px">
+          </div>
+        </div>
+        
+        <!-- 候補3 -->
+        <div style="margin-bottom:10px">
+          <label style="font-size:11px; font-weight:bold; color:#166534; display:block; margin-bottom:3px">③ 候補3</label>
+          <div style="display:flex; gap:6px">
+            <input type="date" id="scheduleDate3" style="flex:1; padding:6px; font-size:11px; border:1px solid #86efac; border-radius:4px">
+            <input type="time" id="scheduleTime3" value="10:00" style="padding:6px; font-size:11px; border:1px solid #86efac; border-radius:4px">
+          </div>
+        </div>
+        
+        <!-- 生成ボタン -->
+        <button id="generateSchedule" style="width:100%; padding:10px; background:#10b981; color:#fff; border:none; border-radius:6px; cursor:pointer; font-weight:bold; font-size:12px">
+          ✨ 日程提案文を生成
+        </button>
+      </div>
+    </div>
+    
+    <!-- 📝 定型文セクション -->
+    <div style="margin-bottom:15px">
+      <div style="display:flex; gap:8px; margin-bottom:8px">
+        <div style="flex:1; padding:8px 12px; background:#8b5cf6; color:#fff; border-radius:6px; font-size:13px; font-weight:bold">
+          📋 定型文
+        </div>
+        <button id="clearAllTemplates" style="padding:8px 16px; background:#ef4444; color:#fff; border:none; border-radius:6px; cursor:pointer; font-weight:bold; font-size:12px; white-space:nowrap">
+          🗑️ 全削除
+        </button>
+      </div>
+      <!-- 🔍 検索窓 -->
+      <div style="margin-bottom:8px">
+        <input 
+          type="text" 
+          id="templateSearch" 
+          placeholder="🔍 定型文を検索..." 
+          style="width:100%; padding:6px 10px; font-size:11px; border:1px solid #ddd; border-radius:4px; box-sizing:border-box"
+        />
+      </div>
+      <div id="templateList" style="max-height:150px; overflow-y:auto; border:1px solid #ddd; border-radius:6px; padding:6px; background:#fafafa">
+        <p style="text-align:center; color:#999; padding:10px; font-size:11px; margin:0">定型文がありません</p>
+      </div>
+      <p style="font-size:10px; color:#666; margin:6px 0 0 0; text-align:center">
+        💡 <a href="#" id="dataInfoLink" style="color:#8b5cf6; text-decoration:none; font-weight:bold">📝定型文やコピペ履歴のデータについて</a>
+      </p>
+    </div>
+    
+    <!-- 🕒 履歴セクション -->
+    <!-- 🕒 履歴セクション -->
+    <div style="margin-bottom:20px">
+      <div style="display:flex; gap:8px; margin-bottom:8px">
+        <div style="flex:1; padding:8px 12px; background:#8b5cf6; color:#fff; border-radius:6px; font-size:13px; font-weight:bold">
+          🕒 履歴
+        </div>
+        <button id="clearAllClipboard" style="padding:8px 16px; background:#ef4444; color:#fff; border:none; border-radius:6px; cursor:pointer; font-weight:bold; font-size:12px; white-space:nowrap">
+          🗑️ 全削除
+        </button>
+      </div>
+      <!-- 🔍 検索窓 -->
+      <div style="margin-bottom:8px">
+        <input 
+          type="text" 
+          id="clipboardSearch" 
+          placeholder="🔍 履歴を検索..." 
+          style="width:100%; padding:6px 10px; font-size:11px; border:1px solid #ddd; border-radius:4px; box-sizing:border-box"
+        />
+      </div>
+      <div id="clipboardList" style="max-height:150px; overflow-y:auto; border:1px solid #ddd; border-radius:6px; padding:6px; background:#fafafa">
+        <p style="text-align:center; color:#999; padding:10px; font-size:11px; margin:0">履歴がありません</p>
+      </div>
+    </div>
+        <!-- 💾 バックアップセクション -->
+    <div style="margin-bottom:20px">
+      <div style="padding:8px 12px; background:#8b5cf6; color:#fff; border-radius:6px; font-size:13px; font-weight:bold; margin-bottom:8px">
+        💾 バックアップ
+      </div>
+      
+      <!-- エクスポートボタン (2形式) -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px">
+        <button id="exportCSV" style="padding:10px; background:#10b981; color:#fff; border:none; border-radius:6px; cursor:pointer; font-weight:bold; font-size:12px">
+          📊 CSV保存
+        </button>
+        <button id="exportJSON" style="padding:10px; background:#8b5cf6; color:#fff; border:none; border-radius:6px; cursor:pointer; font-weight:bold; font-size:12px">
+          📦 JSON保存
+        </button>
+      </div>
+      
+      <!-- インポートボタン -->
+      <button id="importData" style="width:100%; padding:10px; background:#f59e0b; color:#fff; border:none; border-radius:6px; cursor:pointer; font-weight:bold; font-size:12px">
+        📤 復元（CSV/JSON対応）
+      </button>
+      <input type="file" id="importFileInput" accept=".json,.csv" style="display:none">
+      
+      <p style="font-size:10px; color:#666; margin:6px 0 0 0; text-align:center">
+        CSV：Excel編集・画像URL対応 | JSON：完全復元
+      </p>
+    </div>
+    
+    <!-- 📏 設定セクション -->
+    <div class="form-section">
+      <!-- モードとトーン -->
+      <div class="two-column">
+        <div class="form-row">
+          <label for="mode">🎯 モード</label>
+          <select id="mode">
+            <option value="summary">📊 要約</option>
+            <option value="confirm">✅ 確認</option>
+            <option value="reply" selected>💬 返信</option>
+            <option value="ideas">💡 3案</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="tone">🎨 トーン</label>
+          <select id="tone">
+            <option value="polite" selected>🙇 丁寧</option>
+            <option value="concise">⚡ 簡潔</option>
+            <option value="adjust">📅 調整</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row" style="margin-top:12px">
+        <label for="notes">📌 メモ（任意）</label>
+        <textarea id="notes" placeholder="案件メモ・前提条件" style="width:100%; min-height:60px; padding:10px; border:2px solid #ddd; border-radius:6px"></textarea>
+      </div>
+
+      <!-- バグ報告・機能追加リンク -->
+      <div style="margin-top:12px; padding:10px; background:#f0f9ff; border:1px solid #bfdbfe; border-radius:6px; font-size:12px">
+        <div style="font-weight:bold; color:#1e40af; margin-bottom:6px">📞 サポート</div>
+        <div style="display:flex; gap:8px">
+          <a href="https://lin.ee/X2aWSFO" target="_blank" style="flex:1; padding:6px; background:#06c755; color:#fff; text-decoration:none; border-radius:4px; text-align:center; font-size:11px; font-weight:bold">🐛 バグ報告</a>
+          <a href="https://lin.ee/X2aWSFO" target="_blank" style="flex:1; padding:6px; background:#06c755; color:#fff; text-decoration:none; border-radius:4px; text-align:center; font-size:11px; font-weight:bold">💡 機能追加</a>
+        </div>
+      </div>
+      
+      <!-- 設定ボタン -->
+      <button id="opts" class="secondary" style="width:100%; margin-top:12px">
+        ⚙️ 設定
+      </button>
+    </div>
+    
+    <!-- � 使い方説明（非表示） -->
+    <div id="usageInstructions" style="display:none; padding:8px 10px; margin-top:12px; background:#f0f9ff; border-left:3px solid #3b82f6; font-size:11px; color:#1e40af; line-height:1.5">
+      <strong>📌 使い方:</strong><br>
+      ・ <strong>左クリック</strong> → テキストエリアに挿入<br>
+      ・ <strong>右クリック</strong> → 定型文として保存
+    </div>
+  </main>
+
+  <script src="popup.js"></script>
+</body>
+</html>
